@@ -26,11 +26,11 @@ model = train_model()
 
 st.title("🚀 SolarShield AI")
 
-flux = st.number_input("Solar Flux", 50, 300, 150)
-kp = st.number_input("Magnetic Index (Kp)", 0, 9, 4)
-speed = st.number_input("Solar Wind Speed", 300, 800, 400)
-bz = st.number_input("Bz", -20, 20, 0)
-density = st.number_input("Density", 0, 20, 5)
+flux = st.number_input("Күн белсенділігі", 50, 400, 150)
+kp = st.number_input("Магниттік индекс", 0, 9, 4)
+speed = st.number_input("Күн желінің жылдамдығы", 300, 1000, 400)
+bz = st.number_input("Магнит өрісінің бағыты", -50, 20, 0)
+density = st.number_input("Тығыздық", 0, 100, 5)
 
 if st.button("Анализ жасау"):
     X = [[flux, kp, speed, bz, density]]
@@ -39,8 +39,8 @@ if st.button("Анализ жасау"):
     st.write(f"Risk: {prob:.1f}%")
 
     if prob >= 75:
-        st.error("CRITICAL")
+        st.error("ӨТЕ ҚАУІПТІ")
     elif prob >= 40:
-        st.warning("WARNING")
+        st.warning("ҚАУІПТІ")
     else:
-        st.success("STABLE")
+        st.success("ТҰРАҚТЫ")
