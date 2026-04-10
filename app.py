@@ -6,19 +6,20 @@ np.random.seed(42)
 
 @st.cache_resource
 def train_model():
-    n = 1500
+    n = 5000 
+    
     solar_flux = np.random.normal(150, 50, n)
-    magnetic = np.random.normal(4, 2, n)
-    wind_speed = np.random.normal(400, 120, n)
-    bz = np.random.uniform(-15, 15, n)
-    density = np.random.normal(5, 3, n)
+    kp_index = np.random.uniform(0, 9, n) 
+    wind_speed = np.random.normal(400, 150, n)
+    bz = np.random.uniform(-30, 10, n)
+    density = np.random.normal(5, 10, n)
 
-    score = (wind_speed * 0.4) + (density * 20) - (bz * 30)
-    storm = (score > 600).astype(int)
+    score = (kp_index * 100) + (wind_speed * 0.5) - (bz * 40) + (density * 10)
+    
+    storm = (score > 800).astype(int)
 
-    X = np.column_stack([solar_flux, magnetic, wind_speed, bz, density])
-
-    model = RandomForestClassifier(n_estimators=100, max_depth=8)
+    X = np.column_stack([solar_flux, kp_index, wind_speed, bz, density])
+    model = RandomForestClassifier(n_estimators=200, max_depth=10)
     model.fit(X, storm)
     return model
 
