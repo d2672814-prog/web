@@ -8,18 +8,16 @@ np.random.seed(42)
 def train_model():
     n = 15000 
     
-    # Параметры
     solar_flux = np.random.normal(150, 50, n)
     kp_index = np.random.uniform(0, 9, n)
     wind_speed = np.random.normal(400, 150, n)
     bz = np.random.uniform(-20, 10, n)
     density = np.random.normal(5, 10, n)
 
-    score = (kp_index * 20) + (wind_speed * 0.05) - (bz * 15) + (density * 2)
-
+    score = (kp_index * 22) + (wind_speed * 0.06) - (bz * 18) + (density * 3)
     score += np.random.normal(0, 15, n)
 
-    storm = (score > 200).astype(int)
+    storm = (score > 170).astype(int) 
 
     X = np.column_stack([solar_flux, kp_index, wind_speed, bz, density])
     
