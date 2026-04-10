@@ -14,7 +14,7 @@ def train_model():
     bz = np.random.uniform(-20, 10, n)
     density = np.random.normal(5, 10, n)
 
-    score = (kp_index * 22) + (wind_speed * 0.06) - (bz * 18) + (density * 3)
+    score = (kp_index * 20) + (wind_speed * 0.05) - (bz * 16) + (density * 4)
     score += np.random.normal(0, 15, n)
 
     storm = (score > 170).astype(int) 
