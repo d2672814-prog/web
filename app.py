@@ -6,24 +6,31 @@ np.random.seed(42)
 
 @st.cache_resource
 def train_model():
-    n = 10000  
+    n = 20000 
     
     solar_flux = np.random.normal(150, 50, n)
     kp_index = np.random.uniform(0, 9, n)
     wind_speed = np.random.normal(400, 150, n)
-    bz = np.random.uniform(-20, 10, n)
+    bz = np.random.uniform(-20, 15, n)
     density = np.random.normal(5, 10, n)
 
-    score = (kp_index * 50) + (wind_speed * 0.2) - (bz * 25) + (density * 5)
+    base_score = (kp_index * 40) + (wind_speed * 0.15) - (bz * 35) + (density * 5)
+    noise = np.random.normal(0, 50, n) 
     
-    storm = (score > 450).astype(int) 
+    total_score = base_score + noise
+
+    storm = (total_score > 700).astype(int)
 
     X = np.column_stack([solar_flux, kp_index, wind_speed, bz, density])
     
-    model = RandomForestClassifier(n_estimators=100, max_depth=6, min_samples_leaf=10)
+    model = RandomForestClassifier(
+        n_estimators=100, 
+        max_depth=4, 
+        min_samples_leaf=50,
+        random_state=42
+    )
     model.fit(X, storm)
     return model
-
 model = train_model()
 
 st.title("🚀 SolarShield AI")
